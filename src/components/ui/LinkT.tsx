@@ -1,11 +1,7 @@
 import { NavLink } from 'react-router-dom'
+import type { ILinkTProps } from '../../types/components.types'
 
-interface ButtonProps {
-	to: string
-	children: string
-}
-
-export default function LinkT({ to, children }: ButtonProps) {
+export default function LinkT({ to, children }: ILinkTProps) {
 	return (
 		<>
 			<NavLink to={to} className='text-blue-800'>

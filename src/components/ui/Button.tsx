@@ -1,9 +1,6 @@
-interface ButtonProps {
-	text: string
-	onSubmit: () => void
-}
+import type { IButtonProps } from '../../types/components.types'
 
-export default function Button({ text, onSubmit }: ButtonProps) {
+export default function Button({ text, onSubmit }: IButtonProps) {
 	return (
 		<>
 			<button

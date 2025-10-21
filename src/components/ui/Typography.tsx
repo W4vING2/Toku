@@ -1,16 +1,11 @@
-interface TypographyProps {
-	fontSize: string
-	fontWeight: string
-	color: string
-	text: string
-}
+import type { ITypographyProps } from '../../types/components.types'
 
 export default function Typography({
 	color,
 	fontSize,
 	fontWeight,
 	text,
-}: TypographyProps) {
+}: ITypographyProps) {
 	return (
 		<p
 			className='mb-5'
