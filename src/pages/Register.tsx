@@ -1,14 +1,14 @@
 import { useForm } from 'react-hook-form'
-import SuccessPage from '../components/SuccessPage'
 import Button from '../components/ui/Button'
 import Input from '../components/ui/Input'
 import LinkT from '../components/ui/LinkT'
 import { supabase } from '../services/supabase'
 import { useCounterStore } from '../store/authStore'
 import type { FormData } from '../types/form.types'
+import Home from './Home'
 
 export default function Register() {
-	const { isLogged, setIsLogged, setAuthErrors } = useCounterStore()
+	const { isLogged, setIsLogged, setAuthErrors, authErrors } = useCounterStore()
 	const {
 		handleSubmit,
 		register,
@@ -33,7 +33,7 @@ export default function Register() {
 	return (
 		<>
 			{isLogged ? (
-				<SuccessPage />
+				<Home />
 			) : (
 				<div className='flex flex-col justify-center items-center h-screen gap-y-15 text-center'>
 					<h1 className='md:text-6xl text-4xl font-bold'>Register</h1>
@@ -65,6 +65,8 @@ export default function Register() {
 							})}
 							error={errors.password?.message}
 						/>
+
+						{authErrors && <p className='text-red-500'>{authErrors}</p>}
 
 						<Button text='Login' onSubmit={handleSubmit(onSubmit)} />
 					</form>
