@@ -3,6 +3,7 @@ import Button from '../components/ui/Button'
 import Input from '../components/ui/Input'
 import LinkT from '../components/ui/LinkT'
 import { supabase } from '../services/supabase'
+import { insertUsersName } from '../services/usersname'
 import { useCounterStore } from '../store/authStore'
 import type { FormData } from '../types/form.types'
 import Home from './Home'
@@ -25,9 +26,14 @@ export default function Register() {
 		})
 		if (error) {
 			setAuthErrors(error.message)
+			return
 		} else {
 			setIsLogged(true)
 		}
+		await insertUsersName({
+			email: dataI.email,
+			username: dataI.username,
+		})
 	}
 
 	return (
@@ -41,6 +47,18 @@ export default function Register() {
 						className='flex flex-col gap-y-5 text-center items-center'
 						onSubmit={handleSubmit(onSubmit)}
 					>
+						<Input
+							placeholder='Enter username'
+							type='text'
+							registration={register('username', {
+								required: 'Username is required',
+								minLength: {
+									value: 2,
+									message: 'Username must be at least 2 characters',
+								},
+							})}
+							error={errors.username?.message}
+						/>
 						<Input
 							placeholder='Enter email'
 							type='email'
