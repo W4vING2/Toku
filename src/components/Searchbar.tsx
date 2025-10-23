@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../services/supabase'
-import { useCounterStore } from '../store/authStore'
+import { useAuthStore } from '../store/authStore'
+import type { Props, UserFromDB } from '../types/searchBar.types'
+import UserCard from './ui/UserCard'
 
-interface UserFromDB {
-	name: string
-	email: string
-}
-
-export default function Searchbar() {
+export default function Searchbar({ value }: Props) {
 	const [isLoaded, setIsLoaded] = useState(false)
-	const { users, setUsers, setIsSearching } = useCounterStore()
+	const { users, setUsers, setIsSearching } = useAuthStore()
+
+	const currentUser = localStorage.getItem('user')
 
 	useEffect(() => {
 		const getData = async () => {
@@ -32,19 +31,21 @@ export default function Searchbar() {
 	}, [isLoaded, setUsers])
 
 	return (
-		<div className='bg-slate-700 p-4 w-[37%] rounded-md flex flex-col items-center gap-y-3 min-h-[100%] fixed z-[-1] pt-20 top-1'>
+		<div className='bg-slate-700 p-4 w-[550px] flex flex-col items-center gap-y-3 min-h-[100%] fixed z-[-1] pt-20 top-0'>
 			<button
-				className='text-white absolute top-3 right-5 font-bold text-2xl'
+				className='text-white absolute top-6 right-5 font-bold text-2xl'
 				onClick={() => setIsSearching(false)}
 			>
-				x
+				<img src='../../public/x.svg' alt='x' width='15px' height='15px' />
 			</button>
 			{users && users.length > 0
-				? users.map(user => (
-						<p className='text-white bg-blue-200 rounded-md p-2 w-[100%] text-center hover:bg-blue-500 transition-all duration-600'>
-							{user.name}
-						</p>
-				  ))
+				? users
+						.filter(
+							el =>
+								el.name.toLowerCase().includes(value.toLowerCase()) &&
+								el.name !== currentUser
+						)
+						.map(el => <UserCard {...el} />)
 				: 'Nothing to see'}
 		</div>
 	)

@@ -1,39 +1,21 @@
 import { create, type StateCreator } from 'zustand'
-
-interface User {
-	name: string
-	email: string
-}
-
-interface IInitialState {
-	isLogged: boolean
-	authErrors: string
-	isSearching: boolean
-	users: User[] | null
-}
-
-interface IActions {
-	setIsLogged: (isLogged: boolean) => void
-	setAuthErrors: (authErrors: string) => void
-	setIsSearching: (isSearching: boolean) => void
-	setUsers: (users: User[] | null) => void
-}
-
-interface ICounterState extends IInitialState, IActions {}
+import type { ICounterState, IInitialState } from './auth.types'
 
 const initialState: IInitialState = {
 	isLogged: false,
 	isSearching: false,
 	authErrors: '',
 	users: null,
+	selectedChat: null,
 }
 
-const counterStore: StateCreator<ICounterState> = set => ({
+const authStore: StateCreator<ICounterState> = set => ({
 	...initialState,
 	setIsLogged: isLogged => set({ isLogged }),
 	setAuthErrors: authErrors => set({ authErrors }),
 	setIsSearching: isSearching => set({ isSearching }),
 	setUsers: users => set({ users }),
+	setSelectedChat: selectedChat => set({ selectedChat }),
 })
 
-export const useCounterStore = create<ICounterState>()(counterStore)
+export const useAuthStore = create<ICounterState>()(authStore)

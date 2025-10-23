@@ -23,3 +23,13 @@ export interface ITypographyProps {
 	color: string
 	text: string
 }
+
+export interface IInputSearchProps {
+	value: string
+	setValue: (value: string) => void
+}
+
+export interface IUserCardProps {
+	email: string
+	name: string
+}
