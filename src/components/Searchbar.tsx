@@ -38,15 +38,15 @@ export default function Searchbar({ value }: Props) {
 			>
 				<img src='../../public/x.svg' alt='x' width='15px' height='15px' />
 			</button>
-			{users && users.length > 0
+			{users && users.length > 0 && value.length > 0
 				? users
 						.filter(
 							el =>
 								el.name.toLowerCase().includes(value.toLowerCase()) &&
 								el.name !== currentUser
 						)
-						.map(el => <UserCard {...el} />)
-				: 'Nothing to see'}
+						.map(el => <UserCard key={el.email} {...el} />)
+				: 'Enter the name of the user...'}
 		</div>
 	)
 }

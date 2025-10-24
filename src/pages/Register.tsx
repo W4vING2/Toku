@@ -46,7 +46,7 @@ export default function Register() {
 			email: dataI.email,
 			username: dataI.username,
 		})
-		localStorage.setItem('user', dataI.email)
+		localStorage.setItem('user', dataI.username ? dataI.username : '')
 	}
 
 	return (

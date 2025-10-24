@@ -38,7 +38,12 @@ export default function Register() {
 		} else {
 			setIsLogged(true)
 		}
-		localStorage.setItem('user', JSON.stringify(dataI.username))
+		const { data } = await supabase
+			.from('usersname')
+			.select('*')
+			.eq('email', dataI.email)
+		console.log(data)
+		localStorage.setItem('user', data ? data[0].name : '')
 	}
 
 	return (

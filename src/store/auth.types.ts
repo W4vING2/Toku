@@ -1,3 +1,5 @@
+import type { Chat } from '../components/Chat'
+
 export interface User {
 	name: string
 	email: string
@@ -8,7 +10,7 @@ export interface IInitialState {
 	authErrors: string
 	isSearching: boolean
 	users: User[] | null
-	selectedChat: string | null
+	selectedChat: Promise<Chat> | null
 }
 
 export interface IActions {
@@ -16,7 +18,7 @@ export interface IActions {
 	setAuthErrors: (authErrors: string) => void
 	setIsSearching: (isSearching: boolean) => void
 	setUsers: (users: User[] | null) => void
-	setSelectedChat: (selectedChat: string) => void
+	setSelectedChat: (selectedChat: Promise<Chat> | null) => void
 }
 
 export interface ICounterState extends IInitialState, IActions {}
