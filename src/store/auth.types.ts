@@ -1,4 +1,4 @@
-import type { Chat } from '../components/Chat'
+import type { Chat } from '../types/chat.types'
 
 export interface User {
 	name: string
