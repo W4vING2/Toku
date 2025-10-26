@@ -6,6 +6,7 @@ import { useAuthStore } from '../store/authStore'
 import type { Chat, ChatData, Message, outChatData } from '../types/chat.types'
 
 export default function Chat() {
+	const [isSubmitting, setIsSubmitting] = useState(false)
 	const [data, setData] = useState<outChatData | null>(null)
 	const { selectedChat } = useAuthStore()
 	const { register, handleSubmit, reset } = useForm<ChatData>()
@@ -94,6 +95,8 @@ export default function Chat() {
 	}, [selectedChat])
 
 	const onSubmit = async (data: ChatData) => {
+		if (isSubmitting) return
+		setIsSubmitting(true)
 		if (selectedChat !== null) {
 			try {
 				const chatData: Chat = await selectedChat
@@ -149,6 +152,7 @@ export default function Chat() {
 				console.error('🔴 Ошибка при отправке сообщения:', error)
 			}
 		}
+		setIsSubmitting(false)
 	}
 
 	return (
@@ -182,11 +186,11 @@ export default function Chat() {
 							</h1>
 						)}
 					</div>
-					<div className='bg-slate-500 p-2 flex items-center'>
+					<div className='bg-slate-500 p-2 flex items-center relative'>
 						<input
 							{...register('message')}
 							onKeyDown={e => {
-								if (e.key === 'Enter') {
+								if (e.key === 'Enter' && !isSubmitting) {
 									handleSubmit(onSubmit)()
 								}
 							}}
@@ -197,7 +201,7 @@ export default function Chat() {
 						/>
 						<button
 							type='submit'
-							className='rounded-[50%] bg-blue-400 p-2 hover:bg-blue-500 transition-all duration-500 ml-2'
+							className='rounded-[50%] bg-blue-400 p-2 hover:bg-blue-500 transition-all duration-500 ml-2 absolute right-15 bottom-4 z-90'
 						>
 							<img
 								src='../../public/search.svg'
