@@ -8,6 +8,7 @@ export interface ChatData {
 }
 
 export interface Message {
+	id: number
 	message: string
 	created_at: string
 }
@@ -16,6 +17,7 @@ export interface outChatData {
 	data: Array<{
 		message: string
 		type: string
+		id: number
 		created_at: string
 	}>
 }

@@ -36,7 +36,7 @@ export default function Searchbar({ value }: Props) {
 				className='text-white absolute top-6 right-5 font-bold text-2xl'
 				onClick={() => setIsSearching(false)}
 			>
-				<img src='../../public/x.svg' alt='x' width='15px' height='15px' />
+				<img src='/public/x.svg' alt='x' width='20' height='20' />
 			</button>
 			{users && users.length > 0 && value.length > 0
 				? users
